@@ -14,9 +14,8 @@
 	<name>ProjetoEcommerce</name>
 	<description>Projeto final da matéria ApiRestful</description>
 	<properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-</properties>
+		<java.version>11</java.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

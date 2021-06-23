@@ -1,5 +1,6 @@
 package br.org.serratec.backend.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,7 +32,7 @@ public class Foto {
 	private String nome;
 	
 	@ApiModelProperty(value = "chave estrangeira para endentificar o produto relacionado a foto")
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "id_produto")
 	private Produto produto;
 	

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.org.serratec.backend.model.Foto;
 import br.org.serratec.backend.model.Produto;
 import br.org.serratec.backend.repository.ProdutoRepository;
 
@@ -21,20 +22,9 @@ public class ProdutoService {
 
 	@Autowired
 	private FotoService fotoService;
-
-	/*
-	public Page<Produto> listar(Pageable pageable) {
-		Page<Produto> produtos = produtoRepository.findAll(pageable);
-		return produtos;
-	}
-	*/
 	
 	public List<Produto> listar() {
 		List<Produto> produtos = produtoRepository.findAll();
-		
-		for (Produto produto : produtos) {
-			produto.setUrl(adicionarFotoUrl(produto).getUrl());
-		}
 		return produtos;
 	}
 
@@ -65,22 +55,23 @@ public class ProdutoService {
 		return true;
 	}
 
-	public Produto adicionarFotoUrl(Produto produto) {
+	public Produto adicionarFotoUrl(Produto produto, Foto foto) {
 		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/produtos/{id}/foto")
-				.buildAndExpand(produto.getId()).toUri();
+				.buildAndExpand(foto.getId()).toUri();
 		produto.setUrl(uri.toString());
-		return produto;
+		return produtoRepository.save(produto);
 	}
 	
+	/*
 	public Produto buscar(Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
 		return adicionarFotoUrl(produto.get());
 	}
+	*/
 
 	public Produto inserir(Produto produto, MultipartFile file) throws IOException {
-
-		fotoService.inserir(produtoRepository.save(produto), file);
-		return adicionarFotoUrl(produto);
+		Foto foto = fotoService.inserir(produtoRepository.save(produto), file);
+		return adicionarFotoUrl(produto, foto);
 
 	}
 	

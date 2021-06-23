@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -47,13 +48,16 @@ public class Produto {
 	@Column(name = "valor_unitario")
 	private Double valorUnitario;
 
-	
+	@Column
 	private String url;
 
 	@ApiModelProperty(value = "chave estrangeira para endentificar o categoria relacionado ao produto")
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
+	
+	@OneToOne(mappedBy = "produto", orphanRemoval = true)
+	private Foto foto;
 
 	public Produto() {
 	}
