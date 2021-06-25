@@ -76,16 +76,23 @@ public class ProdutoController {
 		return new ResponseEntity<>(foto.getDados(), headers, HttpStatus.OK);
 	}
 
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public Produto inserir(@Valid @RequestBody Produto produto) {
+		return produtoService.inserir(produto);
+	}
+
 	@ApiOperation(value = "Inserir um produto")
 	@ApiResponses(value = { @ApiResponse(code = 202, message = "Produto inserido com sucesso!"),
 			@ApiResponse(code = 401, message = "Erro de autenticação"), @ApiResponse(code = 403, message = "Proibido"),
 			@ApiResponse(code = 404, message = "Recurso não disponível"),
 			@ApiResponse(code = 500, message = "Erro interno no servidor"),
 			@ApiResponse(code = 505, message = "Ocorreu uma exceção") })
-	@PostMapping
+	@PostMapping("/foto")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Produto inserir(@RequestParam MultipartFile file, @Valid @RequestPart Produto produto) throws IOException {
-		return produtoService.inserir(produto, file);
+	public Produto inserirComFoto(@RequestParam MultipartFile file, @Valid @RequestPart Produto produto)
+			throws IOException {
+		return produtoService.inserirComFoto(produto, file);
 	}
 
 	@ApiOperation(value = "Atualizar um produto")

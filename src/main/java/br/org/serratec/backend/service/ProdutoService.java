@@ -35,6 +35,10 @@ public class ProdutoService {
 		}
 		return null;
 	}
+	
+	public Produto inserir(Produto produto) {
+		return produtoRepository.save(produto);
+	}
 
 	public Produto atualizar(Long id, Produto produto) {
 		Optional<Produto> c = produtoRepository.findById(id);
@@ -69,7 +73,7 @@ public class ProdutoService {
 	}
 	*/
 
-	public Produto inserir(Produto produto, MultipartFile file) throws IOException {
+	public Produto inserirComFoto(Produto produto, MultipartFile file) throws IOException {
 		Foto foto = fotoService.inserir(produtoRepository.save(produto), file);
 		return adicionarFotoUrl(produto, foto);
 
