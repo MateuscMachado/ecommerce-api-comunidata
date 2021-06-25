@@ -53,8 +53,8 @@ public class Pedido {
 	private Cliente cliente;
 
 	@ApiModelProperty(value = "chave estrangeira para referenciar uma lista de itens pedidos ao pedido")
-	@JsonManagedReference
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.MERGE) // Colocamos porque sem o PERSIST dava ERRO 415
+	@JsonManagedReference							//era merge até o dia ----> 25/06
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL) // Colocamos porque sem o PERSIST dava ERRO 415
 	private List<ItemPedido> itensPedido;
 
 	public Pedido() {
